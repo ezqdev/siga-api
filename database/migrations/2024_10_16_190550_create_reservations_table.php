@@ -31,6 +31,7 @@ return new class extends Migration
             $table->time('start_time');  //? Hora de inicio
             $table->time('end_time');    //? Hora de fin
             $table->enum('status', ['pendiente', 'aprobado', 'rechazado'])->default('pendiente');  //? Estado de la reserva (e.g., pendiente, confirmada, cancelada)
+            $table->text('uploaded_job');   //? Archivos subidos 
             $table->text('reservation_details');  //? Detalles adicionales
             $table->timestamps();
         });

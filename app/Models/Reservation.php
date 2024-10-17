@@ -15,6 +15,7 @@ class Reservation extends Model
         'start_time',
         'end_time',
         'status',
+        'uploaded_job',
         'reservation_details'
     ];
 

@@ -19,19 +19,19 @@ return new class extends Migration
                     ->on('spaces')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
-            $table->unsignedBigInteger('estate_id');  //? Relación con los Bienes
+            $table->unsignedBigInteger('estate_id')->nullable();  //? Relación con los Bienes
             $table->foreign('estate_id')
                     ->references('id')
                     ->on('estates')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
-            $table->unsignedBigInteger('service_id');  //? Relación con los servicios
+            $table->unsignedBigInteger('service_id')->nullable();  //? Relación con los servicios
             $table->foreign('service_id')
                     ->references('id')
                     ->on('services')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
-            $table->text('Num requisitions');
+            $table->text('Num requisitions')->nullable();
             $table->timestamps();
         });
     }
