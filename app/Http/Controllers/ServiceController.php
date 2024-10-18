@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ServiceCollection;
+use App\Http\Responses\ApiResponse;
 use App\Models\Service;
+use Exception;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
@@ -12,7 +15,12 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        //
+        try{
+            $services = new ServiceCollection(Service::all());
+            return ApiResponse::success('Listado De los Espacios',201,$services);
+        } catch (Exception $e){
+            return ApiResponse::error($e->getMessage(),500);
+        }
     }
 
     /**

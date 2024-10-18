@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\RolCollection;
+use App\Http\Responses\ApiResponse;
 use App\Models\Rol;
+use Exception;
 use Illuminate\Http\Request;
 
 class RolController extends Controller
@@ -12,7 +15,12 @@ class RolController extends Controller
      */
     public function index()
     {
-        //
+        try{
+            $rols = new RolCollection(Rol::all());
+            return ApiResponse::success('Listado De los Roles',201,$rols);
+        } catch (Exception $e){
+            return ApiResponse::error($e->getMessage(),500);
+        }
     }
 
     /**
