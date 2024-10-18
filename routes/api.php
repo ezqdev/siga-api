@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\EstateController;
 use App\Http\Controllers\PositionController;
+use App\Http\Controllers\RequisitionController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\ServiceController;
@@ -18,4 +20,6 @@ Route::apiResource('/user',UserController::class);
 Route::apiResource('/position',PositionController::class);
 Route::apiResource('/space',SpaceController::class);
 Route::apiResource('/service',ServiceController::class);
+Route::apiResource('/estate', EstateController::class); //agregar relacion con el estate en la requisición y reserva.
+Route::apiResource('/requisition', RequisitionController::class);
 Route::apiResource('/reservation',ReservationController::class);

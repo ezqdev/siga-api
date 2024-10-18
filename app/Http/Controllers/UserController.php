@@ -6,6 +6,7 @@ use App\Http\Resources\UserCollection;
 use App\Http\Responses\ApiResponse;
 use App\Models\User;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -36,7 +37,13 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $user = new UserCollection(User::query()->where('id',$id)->get());
+            if ($user->isEmpty()) throw new ModelNotFoundException("Usuario no encontrado");
+            return ApiResponse::success( 'Usuario encontrado',200,$user);
+        } catch (ModelNotFoundException $e) {
+            return ApiResponse::error('Usuario no encontrado',404);
+        }
     }
 
     /**

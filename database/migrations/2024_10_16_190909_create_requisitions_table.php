@@ -31,7 +31,7 @@ return new class extends Migration
                     ->on('services')
                     ->onUpdate('cascade')
                     ->onDelete('cascade');
-            $table->text('Num requisitions')->nullable();
+            $table->text('Num_requisitions')->nullable();
             $table->timestamps();
         });
     }

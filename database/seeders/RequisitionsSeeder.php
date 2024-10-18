@@ -19,7 +19,7 @@ class RequisitionsSeeder extends Seeder
                 'space_id'=> 2,
                 'estate_id'=> 2,
                 'service_id'=> 3,
-                'Num requisitions' => 'FOIROI_1233',
+                'Num_requisitions' => 'FOIROI_1233',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]
@@ -30,7 +30,7 @@ class RequisitionsSeeder extends Seeder
                 'space_id'=> 3,
                 'estate_id'=> 3,
                 'service_id'=> null,
-                'Num requisitions' => 'FOIROI_1233',
+                'Num_requisitions' => 'FOIROI_1233',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]
@@ -41,7 +41,7 @@ class RequisitionsSeeder extends Seeder
                 'space_id'=> 4,
                 'estate_id'=> null,
                 'service_id'=> 2,
-                'Num requisitions' => null,
+                'Num_requisitions' => null,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]

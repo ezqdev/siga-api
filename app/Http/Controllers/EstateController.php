@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\EstateCollection;
+use App\Http\Responses\ApiResponse;
 use App\Models\Estate;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class EstateController extends Controller
@@ -12,7 +16,12 @@ class EstateController extends Controller
      */
     public function index()
     {
-        //
+        try{
+            $estates = new EstateCollection(Estate::all());
+            return ApiResponse::success('Listado De Las Requisiciones',201,$estates);
+        } catch (Exception $e){
+            return ApiResponse::error($e->getMessage(),500);
+        }
     }
 
     /**
@@ -26,9 +35,15 @@ class EstateController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Estate $estate)
+    public function show($id)
     {
-        //
+        try {
+            $estate = new EstateCollection(Estate::query()->where('id',$id)->get());
+            if ($estate->isEmpty()) throw new ModelNotFoundException("Bien No Encontrado");
+            return ApiResponse::success( 'Bien encontrado',200,$estate);
+        } catch (ModelNotFoundException $e) {
+            return ApiResponse::error('Bien No Encontrado',404);
+        }
     }
 
     /**

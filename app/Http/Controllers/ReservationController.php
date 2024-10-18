@@ -6,6 +6,7 @@ use App\Http\Resources\ReservationCollection;
 use App\Http\Responses\ApiResponse;
 use App\Models\Reservation;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
@@ -34,9 +35,15 @@ class ReservationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Reservation $reservation)
+    public function show($id)
     {
-        //
+        try{
+            $reservation = new ReservationCollection(Reservation::query()->where('id',$id)->get());
+            if($reservation->isEmpty()) throw new ModelNotFoundException("Reservacion No Encontrado");
+            return ApiResponse::success( 'Reservacion Encontrado',200,$reservation);
+        } catch (ModelNotFoundException $e) {
+            return ApiResponse::error('Reservacion No Encontrado',404);
+        }
     }
 
     /**

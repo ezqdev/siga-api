@@ -17,7 +17,7 @@ class RolResource extends JsonResource
         return [
             'id' => $this->id,
             'Rol' => $this->name,
-            'Usuarios' => $this->users,
+            'Usuarios' => $this->users->map(fn($user) => $user->name),
         ];
     }
 }

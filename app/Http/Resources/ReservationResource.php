@@ -14,6 +14,18 @@ class ReservationResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'Usuario' => "ID: {$this->user->id} - {$this->user->name}",
+            'Espacio' => "ID: {$this->space->id} - {$this->space->name}",
+            'Fecha Reserva' => $this->reservation_date,
+            'Fecha de inico' => $this-> start_date,
+            'Fecha finalizacion' => $this->end_date,
+            'Hora Inicio' => $this->start_time,
+            'Hora Finalizacion' => $this->end_time,
+            'Archivo Subido' => $this->uploaded_job,
+            'Reservacion Estados' => $this->status,
+            'Comentarios' => $this->reservation_details,
+        ];
     }
 }

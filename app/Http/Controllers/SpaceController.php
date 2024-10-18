@@ -6,6 +6,7 @@ use App\Http\Resources\SpaceCollection;
 use App\Http\Responses\ApiResponse;
 use App\Models\Space;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class SpaceController extends Controller
@@ -34,9 +35,15 @@ class SpaceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Space $space)
+    public function show($id)
     {
-        //
+        try {
+            $spaces = new SpaceCollection(Space::query()->where('id',$id)->get());
+            if ($spaces->isEmpty()) throw new ModelNotFoundException("Espacio no encontrado");
+            return ApiResponse::success( 'Espacio Encontrado',200,$spaces);
+        } catch (ModelNotFoundException $e) {
+            return ApiResponse::error('Espacio no encontrado',404);
+        }
     }
 
     /**

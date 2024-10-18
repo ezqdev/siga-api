@@ -14,6 +14,12 @@ class RequisitionResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'Espacio' => " ID: {$this->space->id} - {$this->space->name}",
+            'Bienes' => $this->estate ? " ID: {$this->estate->id} - {$this->estate->name}": 'N\A',
+            'Servicos' => $this->service ? "ID: {$this->service->id} - {$this->service->name}": 'N\A',
+            'Numero de requisicion' =>  $this->Num_requisitions ?? 'Sin requisicion'
+        ];
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Resources\ServiceCollection;
 use App\Http\Responses\ApiResponse;
 use App\Models\Service;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
@@ -26,9 +27,15 @@ class ServiceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store($id)
     {
-        //
+        try{
+            $services = new ServiceCollection(Service::query()->where('id',$id)->get());
+            if($services->isEmpty()) throw new ModelNotFoundException("Servicio No Encontrado");
+            return ApiResponse::success( 'Servicio Encontrado',200,$services);
+        } catch (ModelNotFoundException $e) {
+            return ApiResponse::error('Servicio no encontrado',404);
+        }
     }
 
     /**

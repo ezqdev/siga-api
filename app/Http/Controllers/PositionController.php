@@ -6,6 +6,7 @@ use App\Http\Resources\PositionCollection;
 use App\Http\Responses\ApiResponse;
 use App\Models\Position;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class PositionController extends Controller
@@ -34,9 +35,15 @@ class PositionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Position $position)
+    public function show($id)
     {
-        //
+        try {
+            $positions = new PositionCollection(Position::query()->where('id',$id)->get());
+            if ($positions->isEmpty()) throw new ModelNotFoundException("Puesto No Encontrado");
+            return ApiResponse::success( 'Puesto encontrado',200,$positions);
+        } catch (ModelNotFoundException $e) {
+            return ApiResponse::error('Puesto no encontrado',404);
+        }
     }
 
     /**

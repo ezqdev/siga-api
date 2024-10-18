@@ -10,7 +10,7 @@ class Requisition extends Model
         'space_id',
         'estate_id',
         'service_id',
-        'Num requisitions'
+        'Num_requisitions'
     ];
 
     public function space()

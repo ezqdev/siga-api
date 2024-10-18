@@ -17,7 +17,7 @@ class PositionResource extends JsonResource
         return [
             'id' => $this->id,
             'Posicion' => $this->name,
-            'Usuarios' => $this->users,
+            'Usuarios' => $this->users->map(fn($user) => $user->name),
         ];
     }
 }

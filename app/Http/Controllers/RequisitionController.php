@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\RequisitionCollection;
+use App\Http\Responses\ApiResponse;
 use App\Models\Requisition;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class RequisitionController extends Controller
@@ -12,7 +16,12 @@ class RequisitionController extends Controller
      */
     public function index()
     {
-        //
+        try{
+            $requisitions = new RequisitionCollection(Requisition::all());
+            return ApiResponse::success('Listado De Las Requisiciones',201,$requisitions);
+        } catch (Exception $e){
+            return ApiResponse::error($e->getMessage(),500);
+        }
     }
 
     /**
@@ -26,9 +35,15 @@ class RequisitionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Requisition $requisition)
+    public function show($id)
     {
-        //
+        try{
+            $requisitions = new RequisitionCollection(Requisition::query()->where('id',$id)->get());
+            if($requisitions->isEmpty()) throw new ModelNotFoundException("Requisicion No Encontrado");
+            return ApiResponse::success( 'Requisicion Encontrado',200,$requisitions);
+        } catch (ModelNotFoundException $e) {
+            return ApiResponse::error('Requisicion no encontrado',404);
+        }
     }
 
     /**
