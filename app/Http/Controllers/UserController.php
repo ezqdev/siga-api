@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreArticleRequest;
 use App\Http\Resources\UserCollection;
 use App\Http\Responses\ApiResponse;
 use App\Models\User;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -27,9 +29,17 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreArticleRequest $request)
     {
-        //
+        try{
+            //$validatedData = $request->validated();
+            $user = User::create($request->validated());
+            return ApiResponse::success("Usuario creado correctamente", 200, $user);
+        } catch (ValidationException $e){
+            return ApiResponse::error("error",404);
+        } catch (Exception $e){
+            return ApiResponse::error($e->getMessage(),404);
+        }
     }
 
     /**

@@ -8,6 +8,7 @@ use App\Models\Rol;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class RolController extends Controller
 {
@@ -29,7 +30,15 @@ class RolController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $request -> validate([
+                'name' => 'required|min:3|max:50',
+            ]);
+            $rol = Rol::create($request->all());
+            return ApiResponse::success('Rol creado exitosamente',201,$rol);
+        }catch(ValidationException $e){
+            return ApiResponse::error($e->getMessage(),404);
+        }
     }
 
     /**
