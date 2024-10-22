@@ -23,3 +23,7 @@ Route::apiResource('/service',ServiceController::class);
 Route::apiResource('/estate', EstateController::class); //agregar relacion con el estate en la requisición y reserva.
 Route::apiResource('/requisition', RequisitionController::class);
 Route::apiResource('/reservation',ReservationController::class);
+
+Route::post('reservation/update/{id}', [ReservationController::class,'update']);
+
+Route::post('space/update/{id}', [SpaceController::class,'update']);

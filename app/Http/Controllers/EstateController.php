@@ -8,6 +8,7 @@ use App\Models\Estate;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class EstateController extends Controller
 {
@@ -18,7 +19,7 @@ class EstateController extends Controller
     {
         try{
             $estates = new EstateCollection(Estate::all());
-            return ApiResponse::success('Listado De Las Requisiciones',201,$estates);
+            return ApiResponse::success('Listado De Los Bienes',201,$estates);
         } catch (Exception $e){
             return ApiResponse::error($e->getMessage(),500);
         }
@@ -29,7 +30,15 @@ class EstateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $request -> validate([
+                'name' => 'required|min:3|max:50',
+            ]);
+            $estate = Estate::create($request->all());
+            return ApiResponse::success('Bien creado exitosamente',201,$estate);
+        }catch(ValidationException $e){
+            return ApiResponse::error($e->getMessage(),404);
+        }
     }
 
     /**
@@ -49,16 +58,37 @@ class EstateController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Estate $estate)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $estate = Estate::findOrFail($id);
+            $request -> validate([
+                'name' => 'required|min:3|max:64',
+            ]);
+            $estate->update($request->all());
+            return  ApiResponse::success('Se ha actualizado el bien',200,$estate);
+        } catch (ModelNotFoundException $e){
+            return ApiResponse::error($e->getMessage(),404);
+        } catch (Exception $e){
+            return ApiResponse::error($e->getMessage(),500);
+        }catch(ModelNotFoundException $e){
+            return ApiResponse::error('No se encontro el bien', 400);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Estate $estate)
+    public function destroy($id)
     {
-        //
+        try{
+            $estate = Estate::findOrFail($id);
+            $estate->delete();
+            return ApiResponse::success("Se ha eliminado el Bien de manera exitosa!!", 200);
+        }catch (ModelNotFoundException $e) {
+            return ApiResponse::error("La reservacion no existe",404);
+        }catch (Exception $e){
+            return ApiResponse::error($e->getMessage(),500);
+        }
     }
 }

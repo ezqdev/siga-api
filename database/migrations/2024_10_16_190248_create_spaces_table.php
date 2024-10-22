@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('spaces', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100 );  //* name = nombre del espcio solicitado / 100 caracteres
-            $table->integer('capacity');  //* capacity = Cuantas personas pueden albergar un espacio
+            $table->string('capacity');  //* capacity = Cuantas personas pueden albergar un espacio
+            $table->text('image');
             $table->text('description'); //* Description = Descripcion del espacio 
             $table->timestamps();
         });

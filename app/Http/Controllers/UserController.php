@@ -9,6 +9,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
@@ -59,9 +60,24 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $user = User::findOrFail($id);
+            $request -> validate([
+                'name' => '|min:3|max:64',
+                'email' => ['required',Rule::unique('users')->ignore($user),'email','min:8','max:64'],
+                'password' => 'min:4|max:64',
+                'rol_id'=>'required',
+                'position_id'=>'required',
+            ]);
+            $user->update($request->all());
+            return  ApiResponse::success('Se ha actualizado el usuario',200,$user);
+        } catch (ModelNotFoundException $e){
+            return ApiResponse::error($e->getMessage(),404);
+        } catch (Exception $e){
+            return ApiResponse::error($e->getMessage(),500);
+        }
     }
 
     /**
@@ -69,6 +85,12 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $user=User::findOrFail($id);
+            $user->delete();
+            return ApiResponse::success("Usuario eliminado de manera correcta!!",200,$user);
+        } catch (ModelNotFoundException $e) {
+            return ApiResponse::error("No se puede encontrar al usuario a eliminar");
+        }
     }
 }

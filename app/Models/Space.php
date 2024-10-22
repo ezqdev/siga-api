@@ -9,6 +9,7 @@ class Space extends Model
     protected $fillable = [
         'name',
         'capacity',
+        'image',
         'description',
     ];
 
