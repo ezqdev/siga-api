@@ -16,7 +16,8 @@ class Reservation extends Model
         'end_time',
         'status',
         'uploaded_job',
-        'reservation_details'
+        'reservation_details',
+        'is_maintenance'
     ];
 
     //? Una reserva pertenece a un usuario
@@ -27,5 +28,15 @@ class Reservation extends Model
     //? Una reserva pertenece a un espacio
     public function space(){
         return $this->belongsTo(Space::class);
+    }
+
+    public function estates()
+    {
+        return $this->belongsToMany(Estate::class, 'reservation_estate');
+    }
+
+    public function services()
+    {
+        return $this->belongsToMany(Service::class, 'reservation_service');
     }
 }

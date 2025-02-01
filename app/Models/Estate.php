@@ -10,5 +10,8 @@ class Estate extends Model
         'name'
     ];
 
-    
+    public function reservations()
+    {
+        return $this->belongsToMany(Reservation::class);
+    }
 }

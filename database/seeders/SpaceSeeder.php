@@ -18,40 +18,40 @@ class SpaceSeeder extends Seeder
             [
                 'name' => 'Sala de usos multiples',
                 'capacity' => 40,
-                'image' => 'Espacio Image1',
+                'image' => 'https://imgv2-1-f.scribdassets.com/img/document/466299956/original/d0bad0363e/1?v=1',
                 'description' => 'Edificio Administrativo',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]
         );
-    
+
         DB::table("spaces")->insert(
             [
                 'name' => 'Cancha Domo',
                 'capacity' => 60,
-                'image' => 'Espacio Image2',
+                'image' => 'https://imgv2-1-f.scribdassets.com/img/document/466299956/original/d0bad0363e/1?v=1',
                 'description' => 'Patio Principal',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]
         );
-                
+
         DB::table("spaces")->insert(
             [
                 'name' => 'Paraninfo',
                 'capacity' => 50,
-                'image' => 'Espacio Image3',
+                'image' => 'https://imgv2-1-f.scribdassets.com/img/document/466299956/original/d0bad0363e/1?v=1',
                 'description' => 'Pendiente',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]
         );
-            
+
         DB::table("spaces")->insert(
                 [
                 'name' => 'Auditorio',
                 'capacity' => 200,
-                'image' => 'Espacio Image4',
+                'image' => 'https://imgv2-1-f.scribdassets.com/img/document/466299956/original/d0bad0363e/1?v=1',
                 'description' => 'Gimnasio Auditorio',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

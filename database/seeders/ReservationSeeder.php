@@ -18,6 +18,8 @@ class ReservationSeeder extends Seeder
             [
                 'user_id'=> 1,
                 'space_id'=> 1,
+                'estate_id' => 1,
+                'service_id' => 1,
                 'reservation_date' => '2024/10/20',
                 'start_date' => '2024/10/20',
                 'end_date' => '2024/10/20',
@@ -35,6 +37,8 @@ class ReservationSeeder extends Seeder
             [
                 'user_id'=> 2,
                 'space_id'=> 2,
+                'estate_id' => 1,
+                'service_id' => 1,
                 'reservation_date' => '2024/10/25',
                 'start_date' => '2024/10/25',
                 'end_date' => '2024/10/28',

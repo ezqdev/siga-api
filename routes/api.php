@@ -15,11 +15,11 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
 // })->middleware('auth:sanctum');
+Route::apiResource('/user',UserController::class);
+Route::apiResource('/position',PositionController::class);
 
 Route::middleware('auth:sanctum')->group(function (){
     Route::apiResource('/rol',RolController::class);
-    Route::apiResource('/user',UserController::class);
-    Route::apiResource('/position',PositionController::class);
     Route::apiResource('/space',SpaceController::class);
     Route::apiResource('/service',ServiceController::class);
     Route::apiResource('/estate', EstateController::class); //* agregar relacion con el estate en la requisición y reserva.
@@ -28,6 +28,10 @@ Route::middleware('auth:sanctum')->group(function (){
 
     Route::post('reservation/update/{id}', [ReservationController::class,'update']);
     Route::post('space/update/{id}', [SpaceController::class,'update']);
+    Route::post('reservation/assignItems/{id}', [ReservationController::class, 'assignItems']);
+    Route::get('reservation/byUser/{userId}', [ReservationController::class, 'byUser']);
+    Route::get('reservation/bySpace/{spaceId}', [ReservationController::class, 'bySpace']);
+    Route::get('space-resume', [SpaceController::class, 'getSpacesResume']);
 });
 
 Route::post('/login',[AuthController::class,'login']);

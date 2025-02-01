@@ -17,7 +17,11 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)){
             $user = User::where('email', $request->email)->first();
             $token = $user->createToken('token-name')->plainTextToken;
-            return ApiResponse::success('Token creado', 200,  $token);
+            $data = [
+                'user' => $user,
+                'token' => $token
+            ];
+            return ApiResponse::success('Token creado', 200,  $data);
         } else {
             return ApiResponse::error ('Credenciales inválidas', 401);
         }

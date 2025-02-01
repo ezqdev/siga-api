@@ -18,6 +18,8 @@ class ReservationResource extends JsonResource
             'id' => $this->id,
             'Usuario' => "ID: {$this->user->id} - {$this->user->name}",
             'Espacio' => "ID: {$this->space->id} - {$this->space->name}",
+            'estate_id' => "Estate: {$this->estate->id}",
+            'service_id' => "Service: {$this->service->id}",
             'Fecha Reserva' => $this->reservation_date,
             'Fecha de inico' => $this-> start_date,
             'Fecha finalizacion' => $this->end_date,
