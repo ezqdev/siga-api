@@ -6,6 +6,7 @@ use App\Http\Resources\ReservationCollection;
 use App\Http\Responses\ApiResponse;
 use App\Models\Reservation;
 use App\Models\ReservationEstate;
+use App\Models\ReservationInput;
 use App\Models\ReservationService;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -143,6 +144,7 @@ class ReservationController extends Controller
             $reservation = Reservation::findOrFail($id);
             $estates = $request->input('estates', []);
             $services = $request->input('services', []);
+            $inputs = $request->input('inputs', []);
 
             foreach ($estates as $estateId) {
                 ReservationEstate::create([
@@ -155,6 +157,13 @@ class ReservationController extends Controller
                 ReservationService::create([
                     'reservation_id' => $reservation->id,
                     'service_id' => $serviceId
+                ]);
+            }
+
+            foreach ($inputs as $inputId) {
+                ReservationInput::create([
+                    'reservation_id' => $reservation->id,
+                    'input_id' => $inputId
                 ]);
             }
 

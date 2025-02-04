@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EstateController;
+use App\Http\Controllers\InputController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\RequisitionController;
 use App\Http\Controllers\ReservationController;
@@ -25,7 +26,7 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::apiResource('/estate', EstateController::class); //* agregar relacion con el estate en la requisición y reserva.
     Route::apiResource('/requisition', RequisitionController::class);
     Route::apiResource('/reservation',ReservationController::class);
-
+    Route::apiResource('/input', InputController::class);
     Route::post('reservation/update/{id}', [ReservationController::class,'update']);
     Route::post('space/update/{id}', [SpaceController::class,'update']);
     Route::post('reservation/assignItems/{id}', [ReservationController::class, 'assignItems']);

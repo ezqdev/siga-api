@@ -7,7 +7,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ServiceSeeder extends Seeder
+class InputSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,73 +15,65 @@ class ServiceSeeder extends Seeder
     public function run(): void
     {
 
-        DB::table('services')->insert(
+        DB::table('inputs')->insert(
             [
-                'name' => 'SILLAS ACOJINADAS',
+                'name' => 'CAFÉ',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]
         );
 
-        DB::table('services')->insert(
+        DB::table('inputs')->insert(
             [
-                'name' => 'TABLONES',
+                'name' => 'AZUCAR',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]
         );
 
-        DB::table('services')->insert(
+        DB::table('inputs')->insert(
             [
-                'name' => 'MANTELES',
+                'name' => 'GALLETA',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]
         );
 
-        DB::table('services')->insert(
+        DB::table('inputs')->insert(
             [
-                'name' => 'FORROS PARA SILLAS',
+                'name' => 'CUCHARAS',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]
         );
 
-        DB::table('services')->insert(
+        DB::table('inputs')->insert(
             [
-                'name' => 'MOÑOS',
+                'name' => 'TE',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]
         );
 
-        DB::table('services')->insert(
+        DB::table('inputs')->insert(
             [
-                'name' => 'TEMPLETE',
+                'name' => 'AGUA EMBOTELLADA',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]
         );
 
-        DB::table('services')->insert(
+        DB::table('inputs')->insert(
             [
-                'name' => 'ATRIL PERSONALIZADO',
+                'name' => 'REFRESCOS',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]
         );
 
-        DB::table('services')->insert(
+        DB::table('inputs')->insert(
             [
-                'name' => 'PANTALLA LED',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ]
-        );
-
-        DB::table('services')->insert(
-            [
-                'name' => 'LUZ Y SONIDO',
+                'name' => 'SERVILLETAS',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]

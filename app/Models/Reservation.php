@@ -17,7 +17,8 @@ class Reservation extends Model
         'status',
         'uploaded_job',
         'reservation_details',
-        'is_maintenance'
+        'is_maintenance',
+        'more_stuff'
     ];
 
     //? Una reserva pertenece a un usuario

@@ -16,7 +16,7 @@ class EstateSeeder extends Seeder
     {
         DB::table('estates')->insert(
             [
-                'name' => 'Sillas',
+                'name' => 'BOCINAS',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]
@@ -24,7 +24,7 @@ class EstateSeeder extends Seeder
 
         DB::table('estates')->insert(
             [
-                'name' => 'Mesas',
+                'name' => 'LAPTOP',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]
@@ -32,7 +32,47 @@ class EstateSeeder extends Seeder
 
         DB::table('estates')->insert(
             [
-                'name' => 'Manteles',
+                'name' => 'PROYECTOR',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]
+        );
+
+        DB::table('estates')->insert(
+            [
+                'name' => 'ATRIL DE MADERA',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]
+        );
+
+        DB::table('estates')->insert(
+            [
+                'name' => 'CAFETERA',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]
+        );
+
+        DB::table('estates')->insert(
+            [
+                'name' => 'ENFRIADORES',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]
+        );
+
+        DB::table('estates')->insert(
+            [
+                'name' => 'HIELERAS GRANDES',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ]
+        );
+
+        DB::table('estates')->insert(
+            [
+                'name' => 'EXTENCIONES',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]
