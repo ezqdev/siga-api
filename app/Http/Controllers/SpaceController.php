@@ -33,8 +33,8 @@ class SpaceController extends Controller
         try {
             $request->validate([
                 'name' => 'required|min:5|max:100',
-                'capacity' => 'required|min:1|max:5',
-                'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png,gif,svg,bmp', 'max:10240'],
+                'capacity' => 'required|min:1|max:10',
+                'image' => 'required|min:1',
                 'description' => 'required|min:5|max:100',
             ]);
             $space = new Space;
@@ -83,8 +83,8 @@ class SpaceController extends Controller
             $space = Space::findOrFail($id);
             $request->validate([
                 'name' => 'required|min:5|max:100',
-                'capacity' => 'required|min:1|max:5',
-                'image' => ['nullable', 'image', 'mimes:jpeg,jpg,png,gif,svg,bmp', 'max:10240'],
+                'capacity' => 'required|min:1|max:10',
+                'image' => 'required|min:1',
                 'description' => 'required|min:5|max:100',
             ]);
             $space->name = $request->input('name');

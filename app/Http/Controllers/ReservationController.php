@@ -20,11 +20,11 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        try{
-            $reservations = new ReservationCollection(Reservation::all());
-            return ApiResponse::success('Listado De las Reservaciones',201,$reservations);
-        } catch (Exception $e){
-            return ApiResponse::error($e->getMessage(),500);
+        try {
+            $reservations = Reservation::with(['space', 'estates', 'services'])->get();
+            return ApiResponse::success('Listado De las Reservaciones', 200, $reservations);
+        } catch (Exception $e) {
+            return ApiResponse::error($e->getMessage(), 500);
         }
     }
 
@@ -58,7 +58,7 @@ class ReservationController extends Controller
             $reservation->reservation_details = $request->input('reservation_details');
             $reservation->uploaded_job = $request->input('uploaded_job', null);
             $reservation->save(); //? Guardar la reservación en la base de datos
-            return ApiResponse::success("Reservación creada correctamente.", 200, $reservation);//? Respuesta de éxito
+            return ApiResponse::success("Reservación creada correctamente.", 200, $reservation); //? Respuesta de éxito
         } catch (ValidationException $e) {
             return ApiResponse::error($e->getMessage(), 422); //? Manejo de errores de validación
         } catch (Exception $e) {
@@ -71,12 +71,12 @@ class ReservationController extends Controller
      */
     public function show($id)
     {
-        try{
-            $reservation = new ReservationCollection(Reservation::query()->where('id',$id)->get());
-            if($reservation->isEmpty()) throw new ModelNotFoundException("Reservacion No Encontrado");
-            return ApiResponse::success( 'Reservacion Encontrada',200,$reservation);
+        try {
+            $reservation = new ReservationCollection(Reservation::query()->where('id', $id)->get());
+            if ($reservation->isEmpty()) throw new ModelNotFoundException("Reservacion No Encontrado");
+            return ApiResponse::success('Reservacion Encontrada', 200, $reservation);
         } catch (ModelNotFoundException $e) {
-            return ApiResponse::error('Reservacion No Encontrada',404);
+            return ApiResponse::error('Reservacion No Encontrada', 404);
         }
     }
 
@@ -111,12 +111,12 @@ class ReservationController extends Controller
             $reservation->reservation_details = $request->input('reservation_details');
             $reservation->uploaded_job = $request->input('uploaded_job', null);
             $reservation->save(); //? Guardar la reservación en la base de datos
-            return ApiResponse::success("Reservación Actualizada correctamente.", 200, $reservation);//? Respuesta de éxito
+            return ApiResponse::success("Reservación Actualizada correctamente.", 200, $reservation); //? Respuesta de éxito
         } catch (ValidationException $e) {
             return ApiResponse::error($e->getMessage(), 422); //? Manejo de errores de validación
         } catch (Exception $e) {
             return ApiResponse::error($e->getMessage(), 500); //? Manejo de cualquier otro error
-        } catch(ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             return ApiResponse::error('No se encontro la Reservacion', 400);
         }
     }
@@ -126,21 +126,21 @@ class ReservationController extends Controller
      */
     public function destroy($id)
     {
-        try{
-            $reservation= Reservation::findOrFail($id);
+        try {
+            $reservation = Reservation::findOrFail($id);
             $reservation->delete();
             return ApiResponse::success("Se ha eliminado la reservacion de manera exitosa!!", 200);
-        }catch (ModelNotFoundException $e) {
-            return ApiResponse::error("La reservacion no existe",404);
-        }catch (Exception $e){
-            return ApiResponse::error($e->getMessage(),500);
+        } catch (ModelNotFoundException $e) {
+            return ApiResponse::error("La reservacion no existe", 404);
+        } catch (Exception $e) {
+            return ApiResponse::error($e->getMessage(), 500);
         }
     }
 
 
     public function assignItems(Request $request, $id)
     {
-        try{
+        try {
             $reservation = Reservation::findOrFail($id);
             $estates = $request->input('estates', []);
             $services = $request->input('services', []);
@@ -168,31 +168,56 @@ class ReservationController extends Controller
             }
 
             return ApiResponse::success('Items asignados exitosamente', 200);
-        }catch (ModelNotFoundException $e) {
-            return ApiResponse::error("La reservacion no existe",404);
-        }catch (Exception $e){
-            return ApiResponse::error($e->getMessage(),500);
+        } catch (ModelNotFoundException $e) {
+            return ApiResponse::error("La reservacion no existe", 404);
+        } catch (Exception $e) {
+            return ApiResponse::error($e->getMessage(), 500);
         }
     }
 
     public function byUser($userId)
     {
-        try{
+        try {
             $reservations = Reservation::with(['space', 'estates', 'services'])->where('user_id', $userId)->get();
             return ApiResponse::success('Reservaciones encontradas', 200, $reservations);
-        }catch (Exception $e){
-            return ApiResponse::error($e->getMessage(),500);
+        } catch (Exception $e) {
+            return ApiResponse::error($e->getMessage(), 500);
         }
     }
 
 
     public function bySpace($spaceId)
     {
-        try{
+        try {
             $reservations = Reservation::with(['space', 'estates', 'services'])->where('space_id', $spaceId)->get();
             return ApiResponse::success('Reservaciones encontradas', 200, $reservations);
-        }catch (Exception $e){
-            return ApiResponse::error($e->getMessage(),500);
+        } catch (Exception $e) {
+            return ApiResponse::error($e->getMessage(), 500);
+        }
+    }
+
+
+    public function changeStatus(Request $request, $reservationId)
+    {
+        try {
+            $status = $request->input('status');
+            $reservation = Reservation::findOrFail($reservationId);
+            if($status){
+                $reservation->update([
+                    'status' => 'aprobado'
+                ]);
+            }else{
+                $reservation->update([
+                    'status' => 'rechazado'
+                ]);
+            }
+            return ApiResponse::success('Estado actualizado exitosamente', 200, $reservation);
+        } catch (ValidationException $e) {
+            return ApiResponse::error($e->getMessage(), 422); //? Manejo de errores de validación
+        } catch (Exception $e) {
+            return ApiResponse::error($e->getMessage(), 500); //? Manejo de cualquier otro error
+        } catch (ModelNotFoundException $e) {
+            return ApiResponse::error('No se encontro la Reservacion', 400);
         }
     }
 }
