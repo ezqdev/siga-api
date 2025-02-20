@@ -43,13 +43,8 @@ class SpaceController extends Controller
             $space->description = $request->input('description');
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
-                $filename = $file->getClientOriginalName();
-                $filename = pathinfo($filename, PATHINFO_FILENAME);
-                $name_file = str_replace(" ", "_", $filename);
-                $extension = $file->getClientOriginalExtension();
-                $picture = date('His') . '_' . $name_file . '.' . $extension; //?Nuevo nombre del archivo
-                $file->move(public_path('uploads/image'), $picture);
-                $space->image = '/uploads/image' . $picture;
+                $path = $file->store('spaces', 'public');
+                $space->image = '/storage/' . $path;
             }
             $space->save();
             return ApiResponse::success("Se ha creado el espacio correctamente", 200, $space);
@@ -92,13 +87,8 @@ class SpaceController extends Controller
             $space->description = $request->input('description');
             if ($request->hasFile('image')) {
                 $file = $request->file('image');
-                $filename = $file->getClientOriginalName();
-                $filename = pathinfo($filename, PATHINFO_FILENAME);
-                $name_file = str_replace(" ", "_", $filename);
-                $extension = $file->getClientOriginalExtension();
-                $picture = date('His') . '_' . $name_file . '.' . $extension; //?Nuevo nombre del archivo
-                $file->move(public_path('uploads/image'), $picture);
-                $space->image = '/uploads/image' . $picture;
+                $path = $file->store('spaces', 'public');
+                $space->image = '/storage/' . $path;
             }
             $space->save();
             return ApiResponse::success("Se ha creado el espacio correctamente", 200, $space);
@@ -134,7 +124,7 @@ class SpaceController extends Controller
         $currentTime = $now->format('H:i:s');
 
         // Espacios ocupados
-        $occupied = Space::whereHas('reservations', function($query) use ($now, $currentTime) {
+        $occupied = Space::whereHas('reservations', function ($query) use ($now, $currentTime) {
             $query->where('start_date', '<=', $now->format('Y-m-d'))
                 ->where('end_date', '>=', $now->format('Y-m-d'))
                 ->where('start_time', '<=', $currentTime)
@@ -147,9 +137,9 @@ class SpaceController extends Controller
 
         // Espacios disponibles (todos los que no están ni ocupados ni en mantenimiento)
         $available = Space::whereNotIn('id', $occupied->pluck('id'))
-                        ->whereNotIn('id', $maintenance->pluck('id'))
-                        ->where('is_maintenance', false)
-                        ->get();
+            ->whereNotIn('id', $maintenance->pluck('id'))
+            ->where('is_maintenance', false)
+            ->get();
 
         return response()->json([
             'occupied' => $occupied,

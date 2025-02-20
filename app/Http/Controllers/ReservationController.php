@@ -43,8 +43,9 @@ class ReservationController extends Controller
                 'start_time' => 'required|date_format:H:i',
                 'end_time' => 'required|date_format:H:i|after:start_time',
                 'status' => 'required|string|max:20',
-                'uploaded_job' => 'required|string',
+                'uploaded_job' => 'nullable|string',
                 'reservation_details' => 'nullable|string',
+                'more_stuff' => 'nullable|string'
             ]);
             $reservation = new Reservation(); //? Crear una nueva reservación
             $reservation->user_id = $request->input('user_id');
@@ -55,8 +56,14 @@ class ReservationController extends Controller
             $reservation->start_time = $request->input('start_time');
             $reservation->end_time = $request->input('end_time');
             $reservation->status = $request->input('status');
-            $reservation->reservation_details = $request->input('reservation_details');
+            $reservation->reservation_details = $request->input('reservation_details', null);
             $reservation->uploaded_job = $request->input('uploaded_job', null);
+            $reservation->more_stuff = $request->input('more_stuff', null);
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $path = $file->store('reservations', 'public');
+                $reservation->file = '/storage/' . $path;
+            }
             $reservation->save(); //? Guardar la reservación en la base de datos
             return ApiResponse::success("Reservación creada correctamente.", 200, $reservation); //? Respuesta de éxito
         } catch (ValidationException $e) {
@@ -97,8 +104,9 @@ class ReservationController extends Controller
                 'start_time' => 'required|date_format:H:i',
                 'end_time' => 'required|date_format:H:i|after:start_time',
                 'status' => 'required|string|max:20',
-                'uploaded_job' => 'required|string',
+                'uploaded_job' => 'nullable|string',
                 'reservation_details' => 'nullable|string',
+                'more_stuff' => 'nullable|string'
             ]);
             $reservation->user_id = $request->input('user_id');
             $reservation->space_id = $request->input('space_id');
@@ -108,8 +116,14 @@ class ReservationController extends Controller
             $reservation->start_time = $request->input('start_time');
             $reservation->end_time = $request->input('end_time');
             $reservation->status = $request->input('status');
-            $reservation->reservation_details = $request->input('reservation_details');
+            $reservation->reservation_details = $request->input('reservation_details', null);
             $reservation->uploaded_job = $request->input('uploaded_job', null);
+            $reservation->more_stuff = $request->input('more_stuff', null);
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $path = $file->store('reservations', 'public');
+                $reservation->file = '/storage/' . $path;
+            }
             $reservation->save(); //? Guardar la reservación en la base de datos
             return ApiResponse::success("Reservación Actualizada correctamente.", 200, $reservation); //? Respuesta de éxito
         } catch (ValidationException $e) {

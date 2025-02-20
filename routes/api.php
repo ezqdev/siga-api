@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EstateController;
+use App\Http\Controllers\EventTypeController;
 use App\Http\Controllers\InputController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\RequisitionController;
@@ -27,6 +28,7 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::apiResource('/requisition', RequisitionController::class);
     Route::apiResource('/reservation',ReservationController::class);
     Route::apiResource('/input', InputController::class);
+    Route::apiResource('/event-types', EventTypeController::class);
     Route::post('reservation/update/{id}', [ReservationController::class,'update']);
     Route::post('space/update/{id}', [SpaceController::class,'update']);
     Route::post('reservation/assignItems/{id}', [ReservationController::class, 'assignItems']);
